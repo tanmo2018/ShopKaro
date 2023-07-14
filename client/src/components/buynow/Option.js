@@ -1,7 +1,36 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import "./buynow.css";
+import { LoginContext } from '../context/ContextProvider';
 
-const Option = () => {
+const Option = ({ deletedata, get }) => {
+    const { account, setAccount } = useContext(LoginContext);
+
+    const removedata = async (req, res) => {
+        try {
+            const res = await fetch(`/remove/${deletedata}`, {
+                method: "DELETE",
+                credentials: "include",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                }
+            });
+
+            const data = await res.json;
+            console.log(data);
+
+            if (res.status === 400 || !data) {
+                console.log("error");
+            } else {
+                console.log("user delete");
+                setAccount(data);
+                get();
+
+            }
+        } catch (error) {
+            console.log("error");
+        }
+    }
     return (
         <div className='add_remove_select'>
             <select>
@@ -10,7 +39,7 @@ const Option = () => {
                 <option value="3">3</option>
                 <option value="4">4</option>
             </select>
-            <p style={{ cursor: "pointer" }}>Delete</p><span>|</span>
+            <p style={{ cursor: "pointer" }} onClick={() => removedata()}>Delete</p><span>|</span>
             <p className='forremovemedia'>Save for later</p><span>|</span>
             <p className='forremovemedia'>See More like this</p>
         </div>

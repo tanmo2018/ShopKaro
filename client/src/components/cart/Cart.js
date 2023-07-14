@@ -1,13 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import "./cart.css";
 import { Divider } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { LoginContext } from '../context/ContextProvider';
 
-const backend = process.env.backend || "http://localhost:8005";
+//env is not initialize!!!!!!!!!!!!!!!!!
+const backend = "http://localhost:8005";
+// console.log(process.env.backend);
+
 const Cart = () => {
 
   const [inddata, setInddata] = useState([]);
   const { id } = useParams("");
+
+  const history = useNavigate("");
+
+  const { account, setAccount } = useContext(LoginContext);
 
   const getinddata = async () => {
     const res = await fetch(`${backend}/getproductsone/${id}`, {
@@ -17,7 +25,7 @@ const Cart = () => {
       }
     });
     const data = await res.json();
-    // console.log(data);
+    console.log(data);
     if (res.status !== 201) {
       console.log("No data is available!");
     } else {
@@ -29,6 +37,35 @@ const Cart = () => {
     getinddata();
   }, [id]);
 
+  //add to cart
+  const addtocart = async (id) => {
+    const checkers = await fetch(`/addcart/${id}`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        inddata
+      })
+    });
+
+    const data1 = await checkers.json();
+    // console.log(data1 + "cart");
+
+    if (checkers.status === 401 || !data1) {
+      console.log("user invalid");
+      alert("user invalid");
+    } else {
+      setAccount(data1);
+      history('/buynow');
+    }
+
+  }
+
+
+
   return (
     <div className='cart_section'>
       {inddata && Object.keys(inddata).length &&
@@ -37,7 +74,7 @@ const Cart = () => {
             <img src={inddata.detailUrl} alt='' />
 
             <div className='cart_btn'>
-              <button className='cart_btn1'>Add to Cart</button>
+              <button className='cart_btn1' onClick={() => addtocart(inddata.id)}>Add to Cart</button>
               <button className='cart_btn2'>Buy Now</button>
             </div>
           </div>

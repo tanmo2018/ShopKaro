@@ -4,7 +4,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const backend = process.env.backend || "http://localhost:8005";
-
 const Sign_up = () => {
 
     const [udata, setData] = useState({

@@ -2,7 +2,7 @@
 //in redux store one can do synchronous updates only
 //MW helps to use it asynchronously  "redux-thunk"
 
-const backend = process.env.backend || "http://localhost:8005";
+const backend = "http://localhost:8005";
 
 export const getProducts = () => async (dispatch) => {
     try {
