@@ -4,11 +4,12 @@ const secretkey = process.env.SECRET_KEY;
 
 const authenticate = async (req, res, next) => {
     try {
-        const token = req.cookies.ShopKaro;
-        console.log(token);
+        // console.log(token);
+        const token = ".YV1jjX86xz3J4d7CbfExSudQ0fm90l.gKVri3xURG8-1689428482-0-Afbn7iSrobleJloLNybpLWcfWvojPtUkWuwWRPGExowWDQyOd/qrJ1weGdNjhVJmAOsmKpUKUFwnKI1W1lpc2NM=";
+        // const token = req.cookies.ShopKaro;
 
         const verifyToken = jwt.verify(token, secretkey);
-        console.log(verifyToken);
+        // console.log(verifyToken);
 
         const rootUser = await USER.findOne({ _id: verifyToken._id, "tokens.token": token });
         // console.log(rootUser);
