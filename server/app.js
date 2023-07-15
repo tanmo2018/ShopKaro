@@ -11,7 +11,7 @@ const cookieParser = require("cookie-parser");
 
 app.use(express.json());
 app.use(cookieParser(""));
-app.use(cors({ origin: 'https://shopkaroindia.onrender.com' }));
+app.use(cors({ credentials: true, origin: 'https://shopkaroindia.onrender.com' }));
 app.use(router);
 
 const port = process.env.PORT || 8005;

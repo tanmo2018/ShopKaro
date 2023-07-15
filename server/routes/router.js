@@ -132,9 +132,9 @@ router.get("/cartdetails", authenticate, async (req, res) => {
 //get valid user
 router.get("/validuser", authenticate, async (req, res) => {
     try {
-        // const validuserone = await USER.findOne({ _id: req.userID });
-        // res.status(201).json(validuserone);
-        res.status(201).json(req.rootUser);
+        const validuserone = await USER.findOne({ _id: req.userID });
+        res.status(201).json(validuserone);
+
     } catch (error) {
         console.log("error" + error);
     }
