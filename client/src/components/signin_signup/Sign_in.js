@@ -36,7 +36,7 @@ const Sign_in = () => {
         try {
             const res = await fetch(`${backend}/login`, {
                 method: "POST",
-                // credentials: 'include',
+                credentials: 'include',
                 headers: {
                     "Content-Type": "application/json"
                 },
