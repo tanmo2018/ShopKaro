@@ -71,14 +71,15 @@ router.post("/login", async (req, res) => {
             // console.log(userLogin);
             if (userLogin) {
                 const isMatch = await bcrypt.compare(password, userLogin.password);
-                console.log(isMatch);
+                // console.log(isMatch);
 
                 if (!isMatch) {
                     res.status(400).json({ error: "Invalid password" });
                 } else {
                     //generate token
                     const token = await userLogin.generateAuthtoken();
-                    console.log(token);
+                    // console.log(token);
+                    //great learning
                     res.cookie("ShopKaro", token, {
                         expires: new Date(Date.now() + 9000000000),
                         httpOnly: true,
@@ -99,7 +100,7 @@ router.post("/login", async (req, res) => {
 router.post("/addcart/:id", authenticate, async (req, res) => {
     try {
         const { id } = req.params;
-        console.log(req.token);
+        // console.log(req.token);
 
         const cart = await Products.findOne({ id: id });
         // console.log(cart);
