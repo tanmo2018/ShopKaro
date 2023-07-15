@@ -81,7 +81,9 @@ router.post("/login", async (req, res) => {
                     console.log(token);
                     res.cookie("ShopKaro", token, {
                         expires: new Date(Date.now() + 9000000000),
-                        httpOnly: true
+                        httpOnly: true,
+                        secure: true,
+                        sameSite: "none"
                     });
                     res.status(201).json(userLogin);
                 }
