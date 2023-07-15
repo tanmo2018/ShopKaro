@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import "./sign_up.css";
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { LoginContext } from '../context/ContextProvider';
@@ -8,12 +8,14 @@ import { LoginContext } from '../context/ContextProvider';
 const backend = "http://localhost:8005";
 
 const Sign_in = () => {
+
+    const { account, setAccount } = useContext(LoginContext);
     const [logdata, setData] = useState({
         email: "",
         password: ""
     });
+    const history = useNavigate();
 
-    const { account, setAccount } = useContext(LoginContext);
 
 
     // console.log(logdata);
@@ -30,30 +32,33 @@ const Sign_in = () => {
     const sendData = async (e) => {
         e.preventDefault(); //submit won't refresh the page
         const { email, password } = logdata;
-
-        const res = await fetch(`/login`, {
-            method: "POST",
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                email, password
-            })
-        });
-        const data = await res.json();
-        // console.log(data);
-        if (res.status === 400 || !data) {
-            toast.warn('Something wrong!', {
-                position: "top-center",
+        try {
+            const res = await fetch(`/login`, {
+                method: "POST",
+                credentials: 'include',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email, password
+                })
             });
-        } else {
-            setAccount(data);
-            toast.success('Matched', {
-                position: "top-center",
-            });
-            console.log(data);
-            setData({ ...logdata, email: "", password: "" });
+            const data = await res.json();
+            // console.log(data);
+            if (res.status === 400 || !data) {
+                toast.warn('Something wrong!', {
+                    position: "top-center",
+                });
+            } else {
+                history("/");
+                setAccount(data);
+                toast.success('Logged in successfuly', {
+                    position: "top-center",
+                });
+                setData({ ...logdata, email: "", password: "" });
+            }
+        } catch (error) {
+            console.log(error.message);
         }
     }
 

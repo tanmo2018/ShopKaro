@@ -80,10 +80,10 @@ router.post("/login", async (req, res) => {
                     const token = await userLogin.generateAuthtoken();
                     console.log(token);
                     res.cookie("ShopKaro", token, {
-                        expires: new Date(Date.now() + 9000000000)
-                        // httpOnly: true
+                        expires: new Date(Date.now() + 9000000000),
+                        httpOnly: true
                     });
-                    res.status(201).json({ userLogin });
+                    res.status(201).json(userLogin);
                 }
             } else {
                 res.status(400).json(error.message);
@@ -154,6 +154,24 @@ router.delete("/remove/:id", authenticate, async (req, res) => {
     } catch (error) {
         res.status(400).json(req.rootUser);
         console.log("error" + error);
+    }
+})
+
+//user logout
+
+router.get("/logout", authenticate, (req, res) => {
+    try {
+        req.rootUser.tokens = req.rootUser.tokens.filter((curtoken) => {
+            return curtoken.token != req.token;
+        });
+
+        res.clearCookie("ShopKaro", { path: "/" });
+
+        req.rootUser.save();
+        res.status(201).json(req.rootUser.tokens);
+        console.log("user logout");
+    } catch (error) {
+        console.log("error for user logout! ");
     }
 })
 module.exports = router;

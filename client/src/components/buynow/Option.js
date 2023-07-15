@@ -1,5 +1,7 @@
 import React, { useContext } from 'react'
 import "./buynow.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { LoginContext } from '../context/ContextProvider';
 
 const Option = ({ deletedata, get }) => {
@@ -16,14 +18,17 @@ const Option = ({ deletedata, get }) => {
                 }
             });
 
-            const data = await res.json;
-            console.log(data);
+            const data = await res.json();
+            // console.log(data);
 
             if (res.status === 400 || !data) {
                 console.log("error");
             } else {
-                console.log("user delete");
+                // console.log("user delete");
                 setAccount(data);
+                toast.success('Item removed from the cart', {
+                    position: "top-center",
+                });
                 get();
 
             }
@@ -42,6 +47,7 @@ const Option = ({ deletedata, get }) => {
             <p style={{ cursor: "pointer" }} onClick={() => removedata()}>Delete</p><span>|</span>
             <p className='forremovemedia'>Save for later</p><span>|</span>
             <p className='forremovemedia'>See More like this</p>
+            <ToastContainer />
         </div>
     )
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -13,6 +13,8 @@ const Sign_up = () => {
         password: "",
         cpassword: ""
     });
+
+    const history = useNavigate();
 
     const addData = (e) => {
         const { name, value } = e.target;
@@ -46,9 +48,10 @@ const Sign_up = () => {
                 position: "top-center",
             });
         } else {
-            toast.success('Successfully Added', {
+            toast.success('Successfully Registered', {
                 position: "top-center",
             });
+            history("/");
             setData({ ...udata, fname: "", email: "", mobile: "", password: "", cpassword: "" });
         }
     }
