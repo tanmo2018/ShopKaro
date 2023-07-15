@@ -4,7 +4,7 @@ const secretkey = process.env.SECRET_KEY;
 
 const authenticate = async (req, res, next) => {
     try {
-        const token = req.cookies.ShopKaro;
+        const token = req.cookies.__cf_bm;
         console.log(token);
 
         const verifyToken = jwt.verify(token, secretkey);
