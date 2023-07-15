@@ -20,6 +20,10 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 
 //material.ui
+
+const backend = process.env.REACT_APP_BACKEND;
+
+
 const Navbar = () => {
 
     const { account, setAccount } = useContext(LoginContext);
@@ -45,7 +49,7 @@ const Navbar = () => {
 
 
     const getDetailValidUser = async () => {
-        const res = await fetch("/validuser", {
+        const res = await fetch(`${backend}/validuser`, {
             method: "GET",
             credentials: "include",
             headers: {
@@ -63,7 +67,7 @@ const Navbar = () => {
         }
     };
     const logoutuser = async () => {
-        const res = await fetch("/logout", {
+        const res = await fetch(`${backend}/logout`, {
             method: "GET",
             credentials: "include",
             headers: {

@@ -4,9 +4,9 @@ import { CircularProgress, Divider } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { LoginContext } from '../context/ContextProvider';
 
-//env is not initialize!!!!!!!!!!!!!!!!!
-const backend = "http://localhost:8005";
-// console.log(process.env.backend);
+const backend = process.env.REACT_APP_BACKEND;
+
+
 
 const Cart = () => {
 
@@ -37,7 +37,7 @@ const Cart = () => {
 
   //add to cart
   const addtocart = async (id) => {
-    const checkers = await fetch(`/addcart/${id}`, {
+    const checkers = await fetch(`${backend}/addcart/${id}`, {
       method: "POST",
       credentials: "include",
       headers: {

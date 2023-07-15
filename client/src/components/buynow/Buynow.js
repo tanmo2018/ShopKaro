@@ -5,13 +5,14 @@ import Option from './Option';
 import Subtotal from './Subtotal';
 import Right from './Right';
 
+const backend = process.env.REACT_APP_BACKEND;
 const Buynow = () => {
 
     const [cartdata, setCartdata] = useState("");
     // console.log(cartdata.carts);
 
     const getdatabuy = async () => {
-        const res = await fetch("/cartdetails", {
+        const res = await fetch(`${backend}/cartdetails`, {
             method: "GET",
             credentials: "include",
             headers: {

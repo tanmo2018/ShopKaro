@@ -3,7 +3,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const backend = process.env.backend || "http://localhost:8005";
+const backend = process.env.REACT_APP_BACKEND;
+
 const Sign_up = () => {
 
     const [udata, setData] = useState({

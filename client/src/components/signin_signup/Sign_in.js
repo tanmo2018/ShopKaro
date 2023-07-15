@@ -5,7 +5,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { LoginContext } from '../context/ContextProvider';
 
-const backend = "http://localhost:8005";
+const backend = process.env.REACT_APP_BACKEND;
+
 
 const Sign_in = () => {
 
@@ -33,7 +34,7 @@ const Sign_in = () => {
         e.preventDefault(); //submit won't refresh the page
         const { email, password } = logdata;
         try {
-            const res = await fetch(`/login`, {
+            const res = await fetch(`${backend}/login`, {
                 method: "POST",
                 credentials: 'include',
                 headers: {

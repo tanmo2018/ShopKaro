@@ -4,12 +4,16 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { LoginContext } from '../context/ContextProvider';
 
+
+const backend = process.env.REACT_APP_BACKEND;
+
+
 const Option = ({ deletedata, get }) => {
     const { account, setAccount } = useContext(LoginContext);
 
     const removedata = async (req, res) => {
         try {
-            const res = await fetch(`/remove/${deletedata}`, {
+            const res = await fetch(`${backend}/remove/${deletedata}`, {
                 method: "DELETE",
                 credentials: "include",
                 headers: {
