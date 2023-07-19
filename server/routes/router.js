@@ -197,7 +197,10 @@ router.post("/create/orderId", authenticate, (req, res) => {
         };
         instance.orders.create(options, function (err, order) {
             // console.log(order);
-            res.send({ orderId: order.id });
+            res.set({
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+            }).send({ orderId: order.id });
         });
     }
     catch (error) {
