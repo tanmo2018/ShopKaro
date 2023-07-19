@@ -72,10 +72,12 @@ const Cart = () => {
   const checkout = async (e) => {
     e.preventDefault();
     let price = inddata.price.cost;
-    let order = await fetch("/create/orderId", {
+    const backend = process.env.REACT_APP_BACKEND;
+    let order = await fetch(`${backend}/create/orderId`, {
       method: "POST",
       credentials: "include",
       headers: {
+        Accept: "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
@@ -91,7 +93,7 @@ const Cart = () => {
       "currency": "INR",
       "name": account.fname,
       "image": "https://img.freepik.com/premium-vector/male-avatar-icon-unknown-anonymous-person-default-avatar-profile-icon-social-media-user-business-man-man-profile-silhouette-isolated-white-background-vector-illustration_735449-120.jpg?",
-      "order_id": orderdata.order_id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      "order_id": orderdata.orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
       "handler": function (response) {
         toast.success(`Payment successfull`, {
           position: "top-center",

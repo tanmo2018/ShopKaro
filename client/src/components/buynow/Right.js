@@ -28,7 +28,7 @@ const Right = ({ item, get }) => {
 
     const checkout = async (e) => {
         e.preventDefault();
-        let order = await fetch("/create/orderId", {
+        let order = await fetch(`${backend}/create/orderId`, {
             method: "POST",
             credentials: "include",
             headers: {
