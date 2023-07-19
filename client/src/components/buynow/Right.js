@@ -28,6 +28,7 @@ const Right = ({ item }) => {
         e.preventDefault();
         let order = await fetch("/create/orderId", {
             method: "POST",
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json"
             },

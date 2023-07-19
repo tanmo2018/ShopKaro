@@ -72,6 +72,7 @@ const Cart = () => {
     let price = inddata.price.cost;
     let order = await fetch("/create/orderId", {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json"
       },
