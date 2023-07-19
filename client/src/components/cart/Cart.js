@@ -35,9 +35,7 @@ const Cart = () => {
     }
   }
 
-  useEffect(() => {
-    getinddata();
-  }, [id]);
+
 
 
   //add to cart
@@ -55,7 +53,7 @@ const Cart = () => {
     });
 
     const data1 = await checkers.json();
-    // console.log(data1 + "cart");
+    console.log(data1 + "cart");
 
     if (checkers.status === 401 || !data1) {
       console.log("user invalid");
@@ -66,6 +64,10 @@ const Cart = () => {
     }
 
   }
+
+  useEffect(() => {
+    getinddata();
+  }, [id]);
 
   const checkout = async (e) => {
     e.preventDefault();
@@ -91,7 +93,10 @@ const Cart = () => {
       "image": "https://img.freepik.com/premium-vector/male-avatar-icon-unknown-anonymous-person-default-avatar-profile-icon-social-media-user-business-man-man-profile-silhouette-isolated-white-background-vector-illustration_735449-120.jpg?",
       "order_id": orderdata.order_id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
       "handler": function (response) {
-        toast.success(`Payment successfull! PaymentID is:${response.razorpay_payment_id}`, {
+        toast.success(`Payment successfull`, {
+          position: "top-center",
+        });
+        toast.success(` Payment ID is: ${response.razorpay_payment_id}`, {
           position: "top-center",
         });
         history("/");

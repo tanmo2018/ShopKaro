@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const router = express.Router();
 const Products = require("../models/productsSchema");
@@ -28,7 +29,7 @@ router.get("/getproductsone/:id", async (req, res) => {
     try {
         const { id } = req.params;
         const individualdata = await Products.findOne({ id: id });
-        // res.status(201).json(individualdata);
+        res.status(201).json(individualdata);
         // console.log(individualdata);
     }
     catch (error) {
@@ -185,21 +186,35 @@ router.get("/logout", authenticate, (req, res) => {
     }
 })
 
+//order creation
 router.post("/create/orderId", authenticate, (req, res) => {
     try {
-        console.log("create order request", req.body);
+        // console.log("create order request", req.body);
         var options = {
             amount: req.body.amount,  // amount in the smallest currency unit
             currency: "INR",
             receipt: "rcp1"
         };
         instance.orders.create(options, function (err, order) {
-            console.log(order);
+            // console.log(order);
             res.send({ orderId: order.id });
         });
     }
     catch (error) {
-        res.send(401).json("error:" + error);
+        console.log("Error in order creation!");
+    }
+})
+
+//remove all item from cart
+router.delete("/removeall", authenticate, async (req, res) => {
+    try {
+        req.rootUser.carts = [];
+        req.rootUser.save();
+        res.status(201).json(req.rootUser);
+        console.log("items removed");
+    } catch (error) {
+        res.status(400).json(req.rootUser);
+        console.log("error" + error);
     }
 })
 

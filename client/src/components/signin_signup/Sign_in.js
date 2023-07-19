@@ -51,12 +51,12 @@ const Sign_in = () => {
                     position: "top-center",
                 });
             } else {
-                history("/");
                 setAccount(data);
                 toast.success('Logged in successfuly', {
                     position: "top-center",
                 });
                 setData({ ...logdata, email: "", password: "" });
+                history("/");
             }
         } catch (error) {
             console.log(error.message);

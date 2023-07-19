@@ -70,7 +70,7 @@ const Buynow = () => {
 
                             <Subtotal item={cartdata} />
                         </div>
-                        <Right item={cartdata} />
+                        <Right item={cartdata} get={getdatabuy} />
                     </div>
                 </div> :
 
