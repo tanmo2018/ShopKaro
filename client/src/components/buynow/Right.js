@@ -40,6 +40,7 @@ const Right = ({ item, get }) => {
             })
         })
         let orderdata = await order.json();
+        console.log(orderdata);
 
 
         var options = {
