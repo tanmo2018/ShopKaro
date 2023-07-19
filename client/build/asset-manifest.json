@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.1c79696a.css",
-    "main.js": "/static/js/main.53f3c111.js",
+    "main.css": "/static/css/main.3b3dbe22.css",
+    "main.js": "/static/js/main.d5930ed9.js",
     "static/media/india.png": "/static/media/india.e0409220f5b441828c3e.png",
     "static/media/blacklogoamazon.png": "/static/media/blacklogoamazon.5d81ff2b4d7319079cd6.png",
     "static/media/amazon_PNG25.png": "/static/media/amazon_PNG25.79a1dd45e47017ffa5da.png",
@@ -10,11 +10,11 @@
     "static/media/revicons.ttf": "/static/media/revicons.57fd05d4ae650374c8de.ttf",
     "static/media/revicons.woff": "/static/media/revicons.e8746a624ed098489406.woff",
     "index.html": "/index.html",
-    "main.1c79696a.css.map": "/static/css/main.1c79696a.css.map",
-    "main.53f3c111.js.map": "/static/js/main.53f3c111.js.map"
+    "main.3b3dbe22.css.map": "/static/css/main.3b3dbe22.css.map",
+    "main.d5930ed9.js.map": "/static/js/main.d5930ed9.js.map"
   },
   "entrypoints": [
-    "static/css/main.1c79696a.css",
-    "static/js/main.53f3c111.js"
+    "static/css/main.3b3dbe22.css",
+    "static/js/main.d5930ed9.js"
   ]
 }
