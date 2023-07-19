@@ -3,7 +3,14 @@ const router = express.Router();
 const Products = require("../models/productsSchema");
 const USER = require("../models/userSchema");
 const bcrypt = require("bcrypt");
+const Razorpay = require("razorpay");
 const authenticate = require("../middleware/authenticate");
+
+
+var instance = new Razorpay({
+    key_id: process.env.RAZORPAY_KEY,
+    key_secret: process.env.RAZORPAY_SECRET,
+});
 
 //get product data api
 router.get("/getproducts", async (req, res) => {
@@ -21,11 +28,10 @@ router.get("/getproductsone/:id", async (req, res) => {
     try {
         const { id } = req.params;
         const individualdata = await Products.findOne({ id: id });
-        res.status(201).json(individualdata);
+        // res.status(201).json(individualdata);
         // console.log(individualdata);
     }
     catch (error) {
-        res.status(400).json(individualdata);
         console.log("error" + error.message);
 
     }
@@ -82,9 +88,9 @@ router.post("/login", async (req, res) => {
                     //great learning
                     res.cookie("ShopKaro", token, {
                         expires: new Date(Date.now() + 9000000000),
-                        httpOnly: true,
-                        secure: true,
-                        sameSite: "none"
+                        httpOnly: true, //http
+                        secure: true, //https
+                        sameSite: "none" //third party
                     });
                     res.status(201).json(userLogin);
                 }
@@ -178,4 +184,23 @@ router.get("/logout", authenticate, (req, res) => {
         console.log("error for user logout! ");
     }
 })
+
+router.post("/create/orderId", authenticate, (req, res) => {
+    try {
+        console.log("create order request", req.body);
+        var options = {
+            amount: req.body.amount,  // amount in the smallest currency unit
+            currency: "INR",
+            receipt: "rcp1"
+        };
+        instance.orders.create(options, function (err, order) {
+            console.log(order);
+            res.send({ orderId: order.id });
+        });
+    }
+    catch (error) {
+        res.send(401).json("error:" + error);
+    }
+})
+
 module.exports = router;
