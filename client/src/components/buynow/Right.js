@@ -49,7 +49,7 @@ const Right = ({ item, get }) => {
             "currency": "INR",
             "name": account.fname,
             "image": "https://img.freepik.com/premium-vector/male-avatar-icon-unknown-anonymous-person-default-avatar-profile-icon-social-media-user-business-man-man-profile-silhouette-isolated-white-background-vector-illustration_735449-120.jpg?",
-            "order_id": orderdata.order_id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "order_id": orderdata.orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
             "handler": async function (response) {
                 try {
                     const res = await fetch(`${backend}/removeall`, {
