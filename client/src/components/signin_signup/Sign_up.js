@@ -61,7 +61,7 @@ const Sign_up = () => {
         <section>
             <div className='sign_container'>
                 <div className='sign_header'>
-                    <img src={require('./blacklogoamazon.png')} alt='amazonlogo' />
+                    <img src={require('./logoblack.png')} alt='shopkarologo' />
                 </div>
                 <div className='sign_form'>
                     <form method='POST'>
