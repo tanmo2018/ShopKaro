@@ -18,8 +18,9 @@ header nav {
 }
 
 header nav .navlogo img {
-    width: 110px;
+    width: 108px;
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 header nav .left {

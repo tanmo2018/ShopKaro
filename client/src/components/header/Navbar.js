@@ -121,12 +121,12 @@ const Navbar = () => {
                     </Drawer>
 
                     <div className='navlogo'>
-                        <NavLink to="/"><img src={require('./amazon_PNG25.png')} alt='' /> </NavLink>
+                        <NavLink to="/"><img src={require('./ShopKaro.png')} alt='' /> </NavLink>
                     </div>
                     <div className='nav_Searchbar'>
                         <input type='text' name='' id=''
                             onChange={(e) => getText(e.target.value)}
-                            placeholder='search your products'
+                            placeholder='Search ShopKaro.Com'
                         />
                         <div className='search_icon'>
                             <SearchIcon id='search' />
@@ -150,7 +150,7 @@ const Navbar = () => {
 
                 <div className='right'>
                     <div className='nav_btn'>
-                        <NavLink to="/login">Sign in</NavLink>
+                        <NavLink to="/login">Sign In</NavLink>
                     </div>
 
                     {
