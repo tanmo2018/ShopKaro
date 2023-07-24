@@ -85,8 +85,8 @@ const Sign_in = () => {
                     </form>
                 </div>
                 <div className='create_accountinfo'>
-                    <p>New To Amazon</p>
-                    <NavLink to="/register"><button>Create Your amazon account</button></NavLink>
+                    <p>New To ShopKaro</p>
+                    <NavLink to="/register"><button>Create Your shopkaro account</button></NavLink>
                 </div>
                 <ToastContainer />
             </div>

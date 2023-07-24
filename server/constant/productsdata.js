@@ -80,7 +80,7 @@ const products = [
             cost: 1124,
             discount: '40%'
         },
-        description: '',
+        description: 'Cleverly designed, this compact hair dryer is easy to handle and lightweight. The ThermoProtect temperature setting provides the optimal hair drying rate while protecting your hair from overheating.',
         discount: 'From ₹499',
         tagline: 'Kubra, Nova & more'
     }

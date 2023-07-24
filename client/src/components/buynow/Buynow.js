@@ -57,7 +57,7 @@ const Buynow = () => {
                                                     <h3 className='differentprice'>₹{e.price.mrp - e.price.cost}</h3>
                                                     <p className='unusual'>Delivery by 27 Jun, Tuesday</p>
                                                     <p>Cash on Delivery available</p>
-                                                    <img src="https://www.adgully.com/img/800/68264_fl.png.jpg" alt='' />
+                                                    <img src={require("./Assured.png")} alt='' />
                                                     <Option deletedata={e.id} get={getdatabuy} />
                                                 </div>
                                                 <h3 className='item_price'>₹{e.price.cost}</h3>

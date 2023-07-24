@@ -13,37 +13,36 @@ var instance = new Razorpay({
     key_secret: process.env.RAZORPAY_SECRET,
 });
 
-//get product data api
+//get products data 
 router.get("/getproducts", async (req, res) => {
     try {
         const productdata = await Products.find();
-        // console.log(productdata);
+
         res.status(201).json(productdata);
     } catch {
         console.log("error" + error.message);
     }
 });
 
-//get individual data
+//get individual product data
 router.get("/getproductsone/:id", async (req, res) => {
     try {
         const { id } = req.params;
         const individualdata = await Products.findOne({ id: id });
         res.status(201).json(individualdata);
-        // console.log(individualdata);
     }
     catch (error) {
         console.log("error" + error.message);
-
     }
 });
 
+//register user
 router.post("/register", async (req, res) => {
     const { fname, email, mobile, password, cpassword } = req.body;
 
     try {
         if (!fname || !email || !mobile || !password || !cpassword) {
-            res.status(422).json({ error: "Fill the all field!" });
+            res.status(422).json({ error: "Fill the all fields!" });
             console.log("Empty field!")
         } else {
             const preUser = await USER.findOne({ email: email });
@@ -51,14 +50,12 @@ router.post("/register", async (req, res) => {
             if (preUser) {
                 res.status(422).json({ error: "This mail is already registered!" });
             } else if (password != cpassword) {
-                res.status(422).json({ error: "Mismatch in Confirm password and Password " });
+                res.status(422).json({ error: "Password and confirm password are not same." });
             } else {
                 const finalUser = new USER({
                     fname, email, mobile, password, cpassword
                 });
                 const storeData = await finalUser.save();
-                // console.log(storeData);
-
                 res.status(201).json(storeData);
             }
         }
@@ -68,27 +65,26 @@ router.post("/register", async (req, res) => {
     }
 })
 
+//login user
 router.post("/login", async (req, res) => {
     const { email, password } = req.body;
     try {
         if (!email || !password) {
-            res.status(400).json({ error: "fill the all data" });
+            res.status(400).json({ error: "Fill the all fields!" });
         } else {
             const userLogin = await USER.findOne({ email: email });
-            // console.log(userLogin);
+
             if (userLogin) {
                 const isMatch = await bcrypt.compare(password, userLogin.password);
-                // console.log(isMatch);
 
                 if (!isMatch) {
                     res.status(400).json({ error: "Invalid password" });
                 } else {
                     //generate token
                     const token = await userLogin.generateAuthtoken();
-                    // console.log(token);
-                    //great learning
+                    //great learning -> in react you have to add 'credential includes' to send cookie data
                     res.cookie("ShopKaro", token, {
-                        expires: new Date(Date.now() + 9000000000),
+                        expires: new Date(Date.now() + 2592000000),
                         httpOnly: true, //http
                         secure: true, //https
                         sameSite: "none" //third party
@@ -104,20 +100,18 @@ router.post("/login", async (req, res) => {
     }
 })
 
+//add to cart
 router.post("/addcart/:id", authenticate, async (req, res) => {
     try {
-        const { id } = req.params;
-        // console.log(req.token);
+        const { id } = req.params; //product id
 
         const cart = await Products.findOne({ id: id });
-        // console.log(cart);
 
         const UserContact = await USER.findOne({ _id: req.userID });
 
         if (UserContact) {
             const cartData = await UserContact.addcartdata(cart);
             await UserContact.save();
-            // console.log(cartData);
             res.status(201).json(UserContact);
         } else {
             res.status(401).json({ error: "Invalid user!" });
@@ -153,7 +147,7 @@ router.get("/validuser", authenticate, async (req, res) => {
 //remove item from cart
 router.delete("/remove/:id", authenticate, async (req, res) => {
     try {
-        const { id } = req.params;
+        const { id } = req.params; //product id
 
         req.rootUser.carts = req.rootUser.carts.filter((curval) => {
             return curval.id != id;
@@ -161,15 +155,14 @@ router.delete("/remove/:id", authenticate, async (req, res) => {
 
         req.rootUser.save();
         res.status(201).json(req.rootUser);
-        console.log("item remove");
+        console.log("Item is removed");
     } catch (error) {
         res.status(400).json(req.rootUser);
         console.log("error" + error);
     }
 })
 
-//user logout
-
+//User logout
 router.get("/logout", authenticate, (req, res) => {
     try {
         req.rootUser.tokens = req.rootUser.tokens.filter((curtoken) => {
@@ -180,23 +173,21 @@ router.get("/logout", authenticate, (req, res) => {
 
         req.rootUser.save();
         res.status(201).json(req.rootUser.tokens);
-        console.log("user logout");
+        console.log("User is logged out");
     } catch (error) {
-        console.log("error for user logout! ");
+        console.log("error in user logout! ");
     }
 })
 
-//order creation
+//order creation for payment
 router.post("/create/orderId", authenticate, (req, res) => {
     try {
-        // console.log("create order request", req.body);
         var options = {
-            amount: req.body.amount,  // amount in the smallest currency unit
+            amount: req.body.amount,  // amount in 'paisa'
             currency: "INR",
             receipt: "rcp1"
         };
         instance.orders.create(options, function (err, order) {
-            // console.log(order);
             res.status(201).json({ orderId: order.id });
         });
     }
@@ -211,7 +202,7 @@ router.delete("/removeall", authenticate, async (req, res) => {
         req.rootUser.carts = [];
         req.rootUser.save();
         res.status(201).json(req.rootUser);
-        console.log("items removed");
+        console.log("All items are removed.");
     } catch (error) {
         res.status(400).json(req.rootUser);
         console.log("error" + error);
